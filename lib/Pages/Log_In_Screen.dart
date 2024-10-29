@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Scan_screen.dart';
+
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
 
@@ -8,6 +10,12 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
+  void _navigateToNextScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ScanScreen()), // Replace with your next screen
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -252,13 +260,21 @@ class _LogInScreenState extends State<LogInScreen> {
                         ],
                       ),
                       SizedBox(height: 19,),
-                      Container(
-                        height: 45,
-                        width: 320,
-                        child: Center(child: Text('Register',style: TextStyle(color: Colors.white),)),
-                        decoration: BoxDecoration(
-                          color: Colors.blue[600],
-                          borderRadius: BorderRadius.circular(25),
+                      GestureDetector(
+                        onTap: _navigateToNextScreen, // Navigate on tap
+                        child: Container(
+                          height: 45,
+                          width: 320,
+                          child: Center(
+                            child: Text(
+                              'Register',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.blue[600],
+                            borderRadius: BorderRadius.circular(25),
+                          ),
                         ),
                       ),
                     ],
