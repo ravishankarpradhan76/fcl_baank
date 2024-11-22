@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'Pages/Details_page.dart';
-import 'Pages/Register_page.dart';
+import 'Pages/Home_Page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,11 +14,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: RegisterPage(),
+      home: HomePage(),
     );
   }
 }
