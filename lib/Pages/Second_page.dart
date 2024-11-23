@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../TextStyle.dart';
 import '../Widgets/customButton.dart';
 import 'Third_page.dart';
+import 'fourth_page.dart';
 
 class SecondPage extends StatefulWidget {
   const SecondPage({super.key});
@@ -11,9 +12,29 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPageState extends State<SecondPage> {
-  bool isTextChecked = false;
-  bool isImageChecked = false;
-  bool isButtonChecked = false;
+  bool isTextChecked = true;
+  bool isImageChecked = true;
+  bool isButtonChecked = true;
+
+  bool get allWidgetsChecked => isTextChecked && isImageChecked && isButtonChecked;
+  void _navigateToNextPage() {
+    if (isButtonChecked && isTextChecked && isImageChecked) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const FourthPage()),
+      );
+    } else if (isButtonChecked) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ThirdPage()),
+      );
+    } else {
+      // Show a message if not all widgets are selected
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please check all widgets to proceed.")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +65,6 @@ class _SecondPageState extends State<SecondPage> {
                           onTap: () {
                             setState(() {
                               isTextChecked = !isTextChecked;
-                              isImageChecked = false;
-                              isButtonChecked = false;
                             });
                           },
                           child: Container(
@@ -81,8 +100,6 @@ class _SecondPageState extends State<SecondPage> {
                           onTap: () {
                             setState(() {
                               isImageChecked = !isImageChecked;
-                              isTextChecked = false;
-                              isButtonChecked = false;
                             });
                           },
                           child: Container(
@@ -117,11 +134,7 @@ class _SecondPageState extends State<SecondPage> {
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
-                              // Toggle only the "Button" checkbox
                               isButtonChecked = !isButtonChecked;
-                              // Reset the others if needed
-                              isTextChecked = false;
-                              isImageChecked = false;
                             });
                           },
                           child: Container(
@@ -140,14 +153,12 @@ class _SecondPageState extends State<SecondPage> {
               ),
               SizedBox(height: 180),
               CustomButton(
-                text: 'Add Widgets',
+                text: 'Import Widgets',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ThirdPage()),
-                  );
+                  // Call navigation function when the button is pressed
+                  _navigateToNextPage();
                 },
-              )
+              ),
             ],
           ),
         ),
