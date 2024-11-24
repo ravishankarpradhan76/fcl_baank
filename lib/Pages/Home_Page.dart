@@ -1,8 +1,8 @@
+import 'package:fcl_baank/Pages/Second_page.dart';
+import 'package:fcl_baank/utills/app_strings.dart';
+import 'package:fcl_baank/utills/common_widgets/custom_button.dart';
 import 'package:flutter/material.dart';
-
-import '../TextStyle.dart';
-import '../Widgets/customButton.dart';
-import 'Second_page.dart';
+import '../utills/app_text_styles.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,40 +16,45 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Assignment App', style: AppTextStyles.header,),
+        title: const Text(
+          AppStrings.assignmentApp,
+          style: AppTextStyles.header,
+        ),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(28.0),
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.green[100],
-              ),
-              width: double.infinity,
-              height: 560,
-              child: Center(
-                child: Text(
-                  'No widget is added',
-                  style: AppTextStyles.body,
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.green[50],
+                ),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 1.4,
+                child: const Center(
+                  child: Text(
+                    AppStrings.noWidgetAdded,
+                    style: AppTextStyles.body,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 25),
-            CustomButton(
-              text: 'Add Widgets',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SecondPage()),
-                );
-              },
-            ),
-          ],
+              const SizedBox(height: 25),
+              CustomButton(
+                text: AppStrings.addWidget,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SecondPage()),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
-      );
+    );
   }
 }

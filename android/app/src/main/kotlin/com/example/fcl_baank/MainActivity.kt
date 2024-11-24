@@ -1,4 +1,4 @@
-package com.example.fcl_baank
+package com.example.blogging
 
 import io.flutter.embedding.android.FlutterActivity
 

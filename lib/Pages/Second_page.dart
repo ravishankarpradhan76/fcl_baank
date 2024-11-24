@@ -1,7 +1,8 @@
+import 'package:fcl_baank/utills/app_strings.dart';
 import 'package:flutter/material.dart';
-import '../TextStyle.dart';
-import '../Widgets/customButton.dart';
-import 'Third_page.dart';
+import '../utills/app_text_styles.dart';
+import '../utills/common_widgets/custom_button.dart';
+import 'third_page.dart';
 import 'fourth_page.dart';
 
 class SecondPage extends StatefulWidget {
@@ -12,18 +13,19 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPageState extends State<SecondPage> {
-  bool isTextChecked = true;
-  bool isImageChecked = true;
-  bool isButtonChecked = true;
+  bool isTextChecked = false;
+  bool isImageChecked = false;
+  bool isButtonChecked = false;
 
-  bool get allWidgetsChecked => isTextChecked && isImageChecked && isButtonChecked;
+  bool get allWidgetsChecked =>
+      isTextChecked && isImageChecked && isButtonChecked;
   void _navigateToNextPage() {
-    if (isButtonChecked && isTextChecked && isImageChecked) {
+    if (allWidgetsChecked) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const FourthPage()),
+        MaterialPageRoute(builder: (context) =>  FourthPage()),
       );
-    } else if (isButtonChecked) {
+    } else if (isButtonChecked && !isImageChecked && !isTextChecked) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const ThirdPage()),
@@ -31,7 +33,7 @@ class _SecondPageState extends State<SecondPage> {
     } else {
       // Show a message if not all widgets are selected
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please check all widgets to proceed.")),
+        const SnackBar(content: Text("Please check valid widgets to proceed.")),
       );
     }
   }
@@ -39,130 +41,96 @@ class _SecondPageState extends State<SecondPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: Colors.green[50],
+      backgroundColor: Colors.green[50],
+      body: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 135),
-          child: Column(
-            children: [
-              Row(
+          padding:
+              const EdgeInsets.symmetric(horizontal: 50.0, vertical: 100.0),
+          child: SingleChildScrollView(
+            child: Container(
+              color: Colors.green[50],
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        color: Colors.grey[400],
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 80),
-                          child: Text('Text Widget', style: AppTextStyles.button),
-                        ),
-                      ),
-                      Positioned(
-                        left: 9,
-                        top: 11,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isTextChecked = !isTextChecked;
-                            });
-                          },
-                          child: Container(
-                            height: 24,
-                            width: 24,
-                            decoration: BoxDecoration(
-                              color: isTextChecked ? Colors.green : Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  _card(
+                      title: AppStrings.textWidget,
+                      isChecked: isTextChecked,
+                      onTapCard: () {
+                        setState(() {
+                          isTextChecked = !isTextChecked;
+                        });
+                      }),
+                  const SizedBox(height: 30),
+                  _card(
+                      title: AppStrings.imageWidget,
+                      isChecked: isImageChecked,
+                      onTapCard: () {
+                        setState(() {
+                          isImageChecked = !isImageChecked;
+                        });
+                      }),
+                  const SizedBox(height: 30),
+                  _card(
+                      title: AppStrings.buttonWidget,
+                      isChecked: isButtonChecked,
+                      onTapCard: () {
+                        setState(() {
+                          isButtonChecked = !isButtonChecked;
+                        });
+                      }),
+                  const SizedBox(height: 30),
+                  CustomButton(
+                    text: AppStrings.saveButton,
+                    onTap: () {
+                      _navigateToNextPage();
+                    },
                   ),
                 ],
               ),
-              SizedBox(height: 70),
-              Row(
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        color: Colors.grey[400],
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 73),
-                          child: Text('Image Widget', style: AppTextStyles.button),
-                        ),
-                      ),
-                      Positioned(
-                        left: 9,
-                        top: 11,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isImageChecked = !isImageChecked;
-                            });
-                          },
-                          child: Container(
-                            height: 24,
-                            width: 24,
-                            decoration: BoxDecoration(
-                              color: isImageChecked ? Colors.green : Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 70),
-              Row(
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        color: Colors.grey[400],
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 71),
-                          child: Text('Button Widget', style: AppTextStyles.button),
-                        ),
-                      ),
-                      Positioned(
-                        left: 9,
-                        top: 11,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isButtonChecked = !isButtonChecked;
-                            });
-                          },
-                          child: Container(
-                            height: 24,
-                            width: 24,
-                            decoration: BoxDecoration(
-                              color: isButtonChecked ? Colors.green : Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 180),
-              CustomButton(
-                text: 'Import Widgets',
-                onTap: () {
-                  // Call navigation function when the button is pressed
-                  _navigateToNextPage();
-                },
-              ),
-            ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  _card({String? title, Function()? onTapCard, bool? isChecked}) {
+    return GestureDetector(
+        onTap: () {
+          if (onTapCard != null) {
+            onTapCard();
+          }
+        },
+        child: Stack(
+          children: [
+            Container(
+              height: 45,
+              width: MediaQuery.of(context).size.width / 1 - 100,
+              color: Colors.grey[300],
+              child:
+                  Center(child: Text(title ?? '', style: AppTextStyles.button)),
+            ),
+            Positioned(
+              child: Container(
+                height: 45,
+                width: 45,
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    decoration: BoxDecoration(
+                      color: isChecked == true
+                          ? Colors.green
+                          : Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }
